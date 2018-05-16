@@ -53,6 +53,12 @@ enum keyboard_macros {
   MACRO_HELP_8,
   MACRO_HELP_9,
   MACRO_MINE,
+  MACRO_CBRAK,
+  MACRO_SBRAK,
+  MACRO_ABRAK,
+  MACRO_PAREN,
+  MACRO_DQUOTE,
+  MACRO_SQUOTE
   //MACRO_SHENT,
 };
 
@@ -90,7 +96,13 @@ enum {
 #define M_HELP7             M(MACRO_HELP_7)
 #define M_HELP8             M(MACRO_HELP_8)
 #define M_HELP9             M(MACRO_HELP_9)
-#define MY_MACRO 	    M(MACRO_MINE)
+#define MY_MACRO 	    	M(MACRO_MINE)
+#define M_CBRAK 			M(MACRO_CBRAK)
+#define M_SBRAK 			M(MACRO_SBRAK)
+#define M_ABRAK 			M(MACRO_ABRAK)
+#define M_PAREN 			M(MACRO_PAREN)
+#define M_DQUOTE 			M(MACRO_DQUOTE)
+#define M_SQUOTE 			M(MACRO_SQUOTE)
 //#define M_SHENT 			M(MACRO_SHENT)
 
 
@@ -166,9 +178,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   '-----------------------------------------------------------------------------------------------------------'
 */
 [LAYER_LOWER] = {
-  { _______, KC_DLR , KC_LCBR, KC_LBRC, KC_LPRN, KC_PERC, KC_HASH, KC_RPRN, KC_RBRC, KC_RCBR, KC_AT  , KC_PGUP },
-  { _______, KC_CIRC, KC_ASTR, KC_PLUS, KC_MINS, KC_SLSH, KC_BSLS, KC_UNDS, KC_QUOT, KC_DQT , KC_GRV , KC_PGDN },
-  { _______, KC_PIPE, KC_AMPR, KC_EXLM, KC_TILD, KC_SCLN, KC_COLN, KC_EQL , KC_LT  , KC_GT  , KC_QUES, KC_HOME },
+  { _______, KC_DLR , M_CBRAK, M_SBRAK, M_PAREN, KC_PERC, KC_HASH, KC_RPRN, KC_RBRC, KC_RCBR, KC_AT  , KC_PGUP },
+  { _______, KC_CIRC, KC_ASTR, KC_PLUS, KC_MINS, KC_SLSH, KC_BSLS, KC_UNDS, M_SQUOTE, M_DQUOTE, KC_GRV , KC_PGDN },
+  { _______, KC_PIPE, KC_AMPR, KC_EXLM, KC_TILD, KC_SCLN, KC_COLN, KC_EQL , M_ABRAK, KC_GT  , KC_QUES, KC_HOME },
   { _______, _______, _______, _______, _______, _______, _______, M_UPPER, _______, _______, _______, KC_END  }
 },
 /* LAYER = LAYER_FUNCTION
@@ -421,7 +433,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case MACRO_MINE:
         	if(record->event.pressed)
         	{
-        		return MACRO( I(03), T(R), T(O), T(O), T(T), W(10), T(TAB), W(10), T(T), T(O), T(O), T(R), T(ENTER), END );
+        		SEND_STRING( "root\ttoor" );
         	}
         	break;
 
@@ -445,6 +457,43 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		}
 		break;
 		*/
+
+        case MACRO_CBRAK:
+        	if(record->event.pressed)
+        	{
+        		SEND_STRING("{}"SS_TAP(X_LEFT));
+        	}
+        	break;
+        case MACRO_SBRAK:
+        	if(record->event.pressed)
+        	{
+        		SEND_STRING("[]"SS_TAP(X_LEFT));
+        	}
+        	break;
+        case MACRO_ABRAK:
+        	if(record->event.pressed)
+        	{
+        		SEND_STRING("<>"SS_TAP(X_LEFT));
+        	}
+        	break;
+        case MACRO_PAREN:
+        	if(record->event.pressed)
+        	{
+        		SEND_STRING("()"SS_TAP(X_LEFT));
+        	}
+        	break;
+        case MACRO_DQUOTE:
+        	if(record->event.pressed)
+        	{
+        		SEND_STRING("\"\""SS_TAP(X_LEFT));
+        	}
+        	break;
+        case MACRO_SQUOTE:
+        	if(record->event.pressed)
+        	{
+        		SEND_STRING("\'\'"SS_TAP(X_LEFT));
+        	}
+        	break;
 
 
 #ifdef BACKLIGHT_ENABLE
