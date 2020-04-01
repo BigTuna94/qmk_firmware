@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define SSD1306OLED
+// #define SSD1306OLED
 
 #define USE_I2C
 
@@ -36,6 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 100
+
+#define OLED_FONT_H "keyboards/crkbd/keymaps/zach/glcdfont.c"
 
 #undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
@@ -47,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BACKLIGHT_LEVELS 10
 
 #undef PRODUCT
-#define PRODUCT "Vee's hotswappable Helidox/Corne/CRKBD split keeb"
+#define PRODUCT "Corne/CRKBD split keeb"
 
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
