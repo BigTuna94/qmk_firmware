@@ -55,6 +55,7 @@ enum macro_keycodes {
 #define KC_LHUD  RGB_HUD
 #define KC_LSAI  RGB_SAI
 #define KC_LSAD  RGB_SAD
+#define KC_LSPI  RGB_SPI
 #define KC_LVAI  RGB_VAI
 #define KC_LVAD  RGB_VAD
 #define KC_LMOD  RGB_MOD
@@ -72,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,     Z,     X,     C,     V,     B,                    N,     M,  COMM,   DOT,  SLSH,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                ALTKN, LOWER,   ENT,      SPC, RAISE, GUIEI \
+                                ALTKN, LOWER,   SPC,      ENT, RAISE, GUIEI \
                               //`--------------------'  `--------------------'
   ),
 
@@ -84,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,    F9,   F10,   F11,   F12,   F13,                     0,    1,     2,     3,  DOT,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  ALTKN, LOWER,   ENT,      SPC, RAISE, 0 \
+                                  ALTKN, LOWER,   SPC,      ENT, RAISE, 0 \
                               //`--------------------'  `--------------------'
   ),
 
@@ -96,19 +97,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
     CTLTB, PIPE, AMPR, EXLM, TILD, SCLN,                        COLN, EQL , LT  , GT  , QUES, HOME,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  ALTKN, LOWER,   ENT,      SPC, RAISE, GUIEI \
+                                  ALTKN, LOWER,   SPC,      ENT, RAISE, GUIEI \
                               //`--------------------'  `--------------------'
   ),
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST, XXXXX, XXXXX, XXXXX, ERST,                  MNXT,  MPRV,    UP,  MFFD,  MPLY,  XXXXX,\
+        RST,  LRST,  LSPI, XXXXX, XXXXX, ERST,                  MNXT,  MPRV,    UP,  MFFD,  MPLY,  XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LTOG,  LHUI,  LSAI,  LVAI,  PGUP, HOME,                  XXXXX, LEFT,  DOWN, RIGHT, XXXXX,   RSFT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LMOD,  LHUD,  LSAD,  LVAD,  PGDN,  END,                  BRID,  BRIU,  VOLD,  VOLU,  MUTE,  RCTL,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  ALTKN, LOWER,   ENT,      SPC, RAISE, GUIEI \
+                                  ALTKN, LOWER,   SPC,      ENT, RAISE, GUIEI \
                               //`--------------------'  `--------------------'
   )
 };
