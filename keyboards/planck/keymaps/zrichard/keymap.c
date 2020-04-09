@@ -4,6 +4,10 @@
 #ifdef AUDIO_ENABLE
     #include "audio.h"
     #include "song_list.h"
+    #include "wait.h"
+# ifndef _delay_ms
+#   define _delay_ms(n) wait_ms(n)
+# endif
 #endif
 
 enum keyboard_layers {
@@ -90,6 +94,7 @@ enum {
 #define MY_MACRO 	    M(MACRO_MINE)
 //#define M_SHENT 			M(MACRO_SHENT)
 
+#define KC_CTLTB CTL_T(KC_TAB)
 
 #define VC_UP               M(MACRO_INC_VOICE)
 #define VC_DOWN             M(MACRO_DEC_VOICE)
@@ -119,18 +124,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   .-----------------------------------------------------------------------------------------------------------.
   | ESC    | Q      | W      | E      | R      | T      | Y      | U      | I      | O      | P      | BACKSP |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  | TAB    | A      | S      | D      | F      | G      | H      | J      | K      | L      | ;      | '      |
+  | CTLTAB | A      | S      | D      | F      | G      | H      | J      | K      | L      | ;      | '      |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  | LSHIFT | Z      | X      | C      | V      | B      | N      | M      | ,      | .      | UP     | SH/ENT |
+  | LSHIFT | Z      | X      | C      | V      | B      | N      | M      | ,      | .      | /      | SH/ENT |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  | LCTRL  | LWIN   | FN     | LALT   | LOWER  | SPACE  | SPACE  | UPPER  |  MENU  | LEFT   | DOWN   | RIGHT  |
+  | FN     | MENU   | OS     | LALT   | LOWER  | SPACE  | SPACE  | UPPER  |  LEFT  |  DOWN  |   UP   |  RIGHT |
   '-----------------------------------------------------------------------------------------------------------'
 */
 [LAYER_QWERTY] = LAYOUT_planck_grid(
    KC_ESC , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC ,
-   KC_TAB , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT ,
-   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_UP  , KC_SFTENT /*M_SHENT*/ ,
-   KC_LCTL, KC_LGUI, M_FUNCT, KC_LALT, M_LOWER, KC_SPC , KC_SPC , M_UPPER, KC_APP , KC_LEFT, KC_DOWN, KC_RGHT
+   KC_CTLTB,KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT ,
+   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_SFTENT /*M_SHENT*/ ,
+   M_FUNCT, KC_APP , KC_LGUI, KC_LALT, M_LOWER, KC_SPC , KC_SPC , M_UPPER, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT
 ),
 /* LAYER = LAYER_UPPER
   .-----------------------------------------------------------------------------------------------------------.
@@ -144,10 +149,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   '-----------------------------------------------------------------------------------------------------------'
 */
 [LAYER_UPPER] = LAYOUT_planck_grid(
-   KC_PSCR, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_NLCK, KC_PSLS, KC_KP_7, KC_KP_8, KC_KP_9, KC_PMNS, KC_DEL  ,
-   KC_PAUS, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_SLCK, KC_PAST, KC_KP_4, KC_KP_5, KC_KP_6, KC_PPLS, KC_HOME ,
-   _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PAUS, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, KC_PENT, KC_END  ,
-   _______, _______, _______, _______, M_LOWER, KC_KP_0, KC_KP_0, _______, KC_KP_0, KC_PDOT, KC_PENT, KC_RCTL
+   KC_PSCR, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_NLCK, KC_PSLS, KC_7  , KC_KP_8, KC_KP_9, KC_PMNS, KC_DEL  ,
+   KC_PAUS, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_SLCK, KC_PAST, KC_4  ., KC_KP_5, KC_KP_6, KC_PPLS, KC_HOME ,
+   _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PAUS, KC_KP_0, KC_1  ., KC_KP_2, KC_KP_3, KC_PENT, KC_END  ,
+   _______, _______, _______, _______, M_LOWER, KC_KP_0, KC_KP_0, ______._, KC_KP_0, KC_PDOT, KC_PENT, KC_RCTL
 ),
 /* LAYER = LAYER_LOWER
   .-----------------------------------------------------------------------------------------------------------.
@@ -202,9 +207,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* LAYER = LAYER_ADJUST
   .-----------------------------------------------------------------------------------------------------------.
-  | XXXXXX | HELP 1 | HELP 2 | HELP 3 | HELP 4 | HELP 5 | HELP 6 | HELP 7 | HELP 8 | HELP 9 | MUSIC  | AUDIO  |
+  | XXXXXX | HELP 1 | HELP 2 | HELP 3 | HELP 4 | HELP 5 | HELP 6 | HELP 7 |   UP   | HELP 9 | MUSIC  | AUDIO  |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  | XXXXXX | BRTOG  | BRSPD+ | BRSPD- | BRDFLT | XXXXXX | XXXXXX | XXXXXX | XXXXXX | XXXXXX | XXXXXX | XXXXXX |
+  | XXXXXX | BRTOG  | BRSPD+ | BRSPD- | BRDFLT | XXXXXX | XXXXXX |  Left  |  Down  |  Right | XXXXXX | XXXXXX |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
   | XXXXXX | QWERTY | XXXXXX | XXXXXX | BACKLT | RESET  | XXXXXX | MOUSE  | XXXXXX | XXXXXX | VOICE+ | MACRO  |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -212,8 +217,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   '-----------------------------------------------------------------------------------------------------------'
 */
 [LAYER_ADJUST] = LAYOUT_planck_grid(
-   XXXXXXX, M_HELP1, M_HELP2, M_HELP3, M_HELP4, M_HELP5, M_HELP6, M_HELP7, M_HELP8, M_HELP9, MU_TOG , AU_TOG  ,
-   XXXXXXX, M_BRTOG, M_BSPDU, M_BSPDD, M_BDFLT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX ,
+   XXXXXXX, M_HELP1, M_HELP2, M_HELP3, M_HELP4, M_HELP5, M_HELP6, M_HELP7, KC_UP  , M_HELP9, MU_TOG , AU_TOG  ,
+   XXXXXXX, M_BRTOG, M_BSPDU, M_BSPDD, M_BDFLT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX ,
    XXXXXXX, M_QWRTY, XXXXXXX, XXXXXXX, M_BACKL, RESET  , XXXXXXX, M_MOUSE, XXXXXXX, XXXXXXX, MUV_IN , MY_MACRO,
    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_LOWER, XXXXXXX, XXXXXXX, M_UPPER, XXXXXXX, TMPO_DN, MUV_DE , TMPO_UP
 ),
