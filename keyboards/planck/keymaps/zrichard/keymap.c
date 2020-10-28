@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "mousekey.h"
 
+
 #ifdef AUDIO_ENABLE
     #include "audio.h"
     #include "song_list.h"
@@ -109,6 +110,10 @@ enum {
 #define TG_NKRO             MAGIC_TOGGLE_NKRO
 #define OS_SHFT             OSM(MOD_RSFT)
 
+#define SP_UPP              LT(M_UPPER, KC_SPC)
+#define SP_LOW              LT(M_LOWER, KC_SPC)
+#define CTLTB               CTL_T(KC_TAB)
+
 #define ________________    _______, _______
 #define XXXXXXXXXXXXXXXX    XXXXXXX, XXXXXXX
 
@@ -126,11 +131,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | LCTRL  | LWIN   | FN     | LALT   | LOWER  | SPACE  | SPACE  | UPPER  |  MENU  | LEFT   | DOWN   | RIGHT  |
   '-----------------------------------------------------------------------------------------------------------'
 */
-[LAYER_QWERTY] = LAYOUT_planck_grid(
+[LAYER_QWERTY] = LAYOUT_planck_2x2u(
    KC_ESC , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC ,
-   KC_TAB , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT ,
-   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_UP  , KC_SFTENT /*M_SHENT*/ ,
-   KC_LCTL, KC_LGUI, M_FUNCT, KC_LALT, M_LOWER, KC_SPC , KC_SPC , M_UPPER, KC_APP , KC_LEFT, KC_DOWN, KC_RGHT
+   CTLTB  , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_ENT ,
+   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT /*M_SHENT*/ ,
+   KC_LCTL, M_FUNCT, KC_LALT, KC_LGUI,      SP_LOW ,        SP_UPP,        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 /* LAYER = LAYER_UPPER
   .-----------------------------------------------------------------------------------------------------------.
@@ -143,11 +148,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | ______ | ______ | ______ | ______ | LOWER  | KP 0   | KP 0   | ______ | RALT   | KP 0   | KP ENT | RTCTRL |
   '-----------------------------------------------------------------------------------------------------------'
 */
-[LAYER_UPPER] = LAYOUT_planck_grid(
-   KC_PSCR, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_NLCK, KC_PSLS, KC_KP_7, KC_KP_8, KC_KP_9, KC_PMNS, KC_DEL  ,
-   KC_PAUS, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_SLCK, KC_PAST, KC_KP_4, KC_KP_5, KC_KP_6, KC_PPLS, KC_HOME ,
-   _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PAUS, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, KC_PENT, KC_END  ,
-   _______, _______, _______, _______, M_LOWER, KC_KP_0, KC_KP_0, _______, KC_KP_0, KC_PDOT, KC_PENT, KC_RCTL
+[LAYER_UPPER] = LAYOUT_planck_2x2u(
+   KC_PSCR, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_NLCK, KC_PSLS, KC_7   , KC_8   , KC_9   , KC_PMNS, KC_DEL  ,
+   KC_PAUS, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_SLCK, KC_PAST, KC_4   , KC_5   , KC_6   , KC_PPLS, KC_HOME ,
+   _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PAUS, KC_KP_0, KC_1   , KC_2   , KC_3   , KC_ENT , KC_END  ,
+   _______, _______, _______, _______,      SP_LOW,          _______,      KC_0   , KC_DOT , KC_ENT , KC_RCTL
 ),
 /* LAYER = LAYER_LOWER
   .-----------------------------------------------------------------------------------------------------------.
@@ -160,11 +165,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | ______ | ______ | ______ | ______ | ______ | ______ | ______ | UPPER  | ______ | ______ | ______ | END    |
   '-----------------------------------------------------------------------------------------------------------'
 */
-[LAYER_LOWER] = LAYOUT_planck_grid(
+[LAYER_LOWER] = LAYOUT_planck_2x2u(
    _______, KC_DLR , KC_LCBR, KC_LBRC, KC_LPRN, KC_PERC, KC_HASH, KC_RPRN, KC_RBRC, KC_RCBR, KC_AT  , KC_PGUP ,
    _______, KC_CIRC, KC_ASTR, KC_PLUS, KC_MINS, KC_SLSH, KC_BSLS, KC_UNDS, KC_QUOT, KC_DQT , KC_GRV , KC_PGDN ,
    _______, KC_PIPE, KC_AMPR, KC_EXLM, KC_TILD, KC_SCLN, KC_COLN, KC_EQL , KC_LT  , KC_GT  , KC_QUES, KC_HOME ,
-   _______, _______, _______, _______, _______, _______, _______, M_UPPER, _______, _______, _______, KC_END
+   _______, _______, _______, _______,       _______,        SP_UPP,      _______, _______, _______, KC_END
 ),
 /* LAYER = LAYER_FUNCTION
   .-----------------------------------------------------------------------------------------------------------.
@@ -177,11 +182,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | ______ | ______ | FN     | ______ | ______ | PLAY   | PLAY   | ______ | ______ | PREV   | VOL DN | NEXT   |
   '-----------------------------------------------------------------------------------------------------------'
 */
-[LAYER_FUNCTION] = LAYOUT_planck_grid(
-   XXXXXXX, KC_F13 , KC_F14 , KC_F15 , KC_F16 , KC_NLCK, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX ,
+[LAYER_FUNCTION] = LAYOUT_planck_2x2u(
+   XXXXXXX, KC_F13 , KC_F14 , KC_F15 , KC_F16 , KC_NLCK, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, RESET   ,
    XXXXXXX, KC_F17 , KC_F18 , KC_F19 , KC_F20 , KC_SLCK, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX ,
    _______, KC_F21 , KC_F22 , KC_F23 , KC_F24 , KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLU, KC_MUTE ,
-   _______, _______, M_FUNCT, _______, _______, KC_MPLY, KC_MPLY, _______, _______, KC_MPRV, KC_VOLD, KC_MNXT
+   _______, M_FUNCT, _______, _______,      _______,         _______,      _______, KC_MPRV, KC_VOLD, KC_MNXT
 ),
 /* LAYER = LAYER_MOUSE
   .-----------------------------------------------------------------------------------------------------------.
@@ -194,11 +199,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | ______ | ______ | ______ | ______ | ______ | MS BT1 | MS BT1 | ______ | ______ | MS L   | MS D   | MS R   |
   '-----------------------------------------------------------------------------------------------------------'
 */
-[LAYER_MOUSE] = LAYOUT_planck_grid(
+[LAYER_MOUSE] = LAYOUT_planck_2x2u(
    KC_ESC , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_MS_UL, KC_MS_U, M_MS_UR, KC_WH_L, KC_WH_R ,
    XXXXXXX, KC_BTN5, KC_BTN4, KC_BTN3, KC_BTN2, XXXXXXX, XXXXXXX, KC_MS_L, XXXXXXX, KC_MS_R, XXXXXXX, KC_WH_U ,
-   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_MS_DL, KC_MS_D, M_MS_DR, KC_MS_U, KC_WH_D ,
-   _______, _______, _______, _______, _______, KC_BTN1, KC_BTN1, _______, _______, KC_MS_L, KC_MS_D, KC_MS_R
+   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN1, M_MS_DL, KC_MS_D, M_MS_DR, KC_MS_U, KC_WH_D ,
+   _______, _______, _______, _______,      _______,        _______,       _______, KC_MS_L, KC_MS_D, KC_MS_R
 ),
 /* LAYER = LAYER_ADJUST
   .-----------------------------------------------------------------------------------------------------------.
@@ -211,11 +216,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | XXXXXX | XXXXXX | XXXXXX | XXXXXX | LOWER  | XXXXXX | XXXXXX | UPPER  | XXXXXX | TEMPO- | VOICE- | TEMPO+ |
   '-----------------------------------------------------------------------------------------------------------'
 */
-[LAYER_ADJUST] = LAYOUT_planck_grid(
+[LAYER_ADJUST] = LAYOUT_planck_2x2u(
    XXXXXXX, M_HELP1, M_HELP2, M_HELP3, M_HELP4, M_HELP5, M_HELP6, M_HELP7, M_HELP8, M_HELP9, MU_TOG , AU_TOG  ,
    XXXXXXX, M_BRTOG, M_BSPDU, M_BSPDD, M_BDFLT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX ,
    XXXXXXX, M_QWRTY, XXXXXXX, XXXXXXX, M_BACKL, RESET  , XXXXXXX, M_MOUSE, XXXXXXX, XXXXXXX, MUV_IN , MY_MACRO,
-   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_LOWER, XXXXXXX, XXXXXXX, M_UPPER, XXXXXXX, TMPO_DN, MUV_DE , TMPO_UP
+   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      SP_LOW,            SP_UPP,     XXXXXXX, TMPO_DN, MUV_DE , TMPO_UP
 ),
 
 };
@@ -403,7 +408,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             {
                 #ifdef BACKLIGHT_BREATHING
                   breathing_period_set(1);
-                  breathing_self_disable();
+                  // breathing_self_disable();
+                  breathing_disable();
                 #endif
                 layer_off(LAYER_FUNCTION);
             }
@@ -567,7 +573,8 @@ void led_set_user(uint8_t usb_led)
 {
     static uint8_t old_usb_led = 0;
 
-    _delay_ms(10); // gets rid of tick
+    //_delay_ms(10); // gets rid of tick
+    wait_ms(10);
 
     if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK)))
     {
@@ -605,14 +612,16 @@ void led_set_user(uint8_t usb_led)
 
 void startup_user()
 {
-    _delay_ms(10); // gets rid of tick
+    // _delay_ms(10); // gets rid of tick
+    wait_ms(10);
     PLAY_SONG(tone_my_startup);
 }
 
 void shutdown_user()
 {
     PLAY_SONG(tone_my_goodbye);
-    _delay_ms(2000);
+    //_delay_ms(2000);
+    wait_ms(10);
     stop_all_notes();
 }
 
